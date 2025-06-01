@@ -9,7 +9,6 @@
     <style>
         /* Page slide-from-top animation */
         body {
-            /* Slide in from top */
             transform: translateY(-100vh);
             opacity: 0;
             transition:
@@ -80,9 +79,8 @@
             padding: 32px 0 0 0;
             transition: margin-right 0.4s cubic-bezier(.68,-0.55,.27,1.55);
         }
-        /* Hamburger hidden on desktop */
         .hamburger { display: none; }
-        /* Mobile sidebar and hamburger */
+        /* Mobile adjustments */
         @media (max-width: 800px) {
             .sidebar {
                 width: 70vw;
@@ -112,8 +110,46 @@
                 border-radius: 2px;
                 transition: 0.3s;
             }
+            .main-content .container {
+                padding: 0 16px;
+                text-align: center;
+            }
+            h2#typing-h2 {
+                font-size: 1.5rem;
+            }
+            .text {
+                font-size: 1rem;
+                line-height: 1.5;
+            }
+            .profession {
+                display: inline-block;
+                margin-top: 6px;
+            }
+            .social-icons {
+                display: flex;
+                justify-content: center;
+                gap: 12px;
+                margin-top: 20px;
+                flex-wrap: wrap;
+            }
+            .icon {
+                font-size: 1.5rem;
+            }
+            img.img3 {
+                max-width: 90%;
+                height: auto;
+                display: block;
+                margin: 20px auto;
+            }
         }
-        /* Hide desktop navbar */
+        /* Desktop */
+        img.img3 {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 200px;
+            height: auto;
+        }
         .desktop-navbar { display: none !important; }
         body { padding-top: 0; }
     </style>
@@ -137,7 +173,7 @@
     </aside>
     <div class="main-content">
         <div class="container">
-            <h2 id="typing-h2" ></h2>
+            <h2 id="typing-h2"></h2>
             <p class="text">
                 Hello my name is <span class="name" id="typing-name"></span> <br>
                 I am a <span class="profession">Forex Trader</span> <span class="profession">Video Editor</span> and <span class="profession">Programmer</span>.
@@ -152,13 +188,11 @@
     </div>
     <img src="Picsart_25-06-01_20-30-37-710.png" class="img3" alt="">
     <script>
-    // Hamburger menu toggle for sidebar
     const hamburger = document.getElementById('hamburger');
     const sidebar = document.getElementById('sidebar');
     hamburger.onclick = function() {
         sidebar.classList.toggle('open');
     };
-    // Close sidebar when clicking outside on mobile
     document.addEventListener('click', function(e) {
         if (
             sidebar.classList.contains('open') &&
@@ -170,7 +204,6 @@
         }
     });
 
-    // Typing effect
     const h2Texts = ["Forex Trader", "Video Editor", "Programmer"];
     let h2Count = 0;
     let h2Index = 0;
@@ -188,9 +221,9 @@
         if (h2Letter.length === h2Current.length) {
             h2Count++;
             h2Index = 0;
-            setTimeout(typeH2, 1200); // Pause before next word
+            setTimeout(typeH2, 1200);
         } else {
-            setTimeout(typeH2, 100); // Typing speed
+            setTimeout(typeH2, 100);
         }
     })();
     const nameText = "HANIF AWOL";
@@ -199,13 +232,12 @@
     function typeName() {
         document.getElementById('typing-name').textContent = nameText.slice(0, ++nameIndex);
         if (nameIndex < nameText.length) {
-            setTimeout(typeName, 250); // Typing speed
+            setTimeout(typeName, 250);
         }
     }
-    document.getElementById('typing-name').textContent = ""; // Clear initial text
+    document.getElementById('typing-name').textContent = "";
     typeName();
 
-    // Page slide-from-top animation
     window.addEventListener('DOMContentLoaded', function() {
         document.body.classList.add('page-loaded');
     });
@@ -223,7 +255,7 @@
                 document.body.classList.add('page-unloading');
                 setTimeout(() => {
                     window.location = href;
-                }, 600); // match transition duration
+                }, 600);
             }
         });
     });
