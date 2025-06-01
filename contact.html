@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Me</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-image: url('https://plus.unsplash.com/premium_photo-1686071978237-045211ad85ec?w=600&auto=format&fit=crop&q=60');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      /* Slide animation */
+      transform: translateX(100vw);
+      opacity: 0;
+      transition:
+        transform 0.5s cubic-bezier(.4,0,.2,1),
+        opacity 0.5s cubic-bezier(.4,0,.2,1);
+    }
+    body.page-loaded {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    body.page-unloading {
+      transform: translateX(-100vw);
+      opacity: 0;
+    }
+    .container { padding: 40px 20px; max-width: 600px; margin: auto; }
+    h1 { text-align: center; margin-bottom: 30px; font-size: 2.5rem; color: #00aeff; text-shadow: 1px 1px 6px black; }
+    form { background: rgba(0, 0, 0, 0.7); padding: 25px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0, 174, 255, 0.2); }
+    label { display: block; margin-bottom: 8px; font-weight: bold; color: #00aeff; }
+    input, textarea {
+      width: 100%; padding: 12px; margin-bottom: 20px;
+      border: none; border-radius: 6px; background: #1e1e1e; color: #fff;
+    }
+    button {
+      background: #00aeff; color: #fff; border: none;
+      padding: 12px 20px; border-radius: 6px; cursor: pointer;
+    }
+    .sidebar { position: fixed; right: 0; top: 0; width: 200px; height: 100%; background: rgba(0, 0, 0, 0.9); padding: 30px 20px; z-index: 100; }
+    .logo { font-size: 1.8rem; color: #00aeff; font-weight: bold; margin-bottom: 30px; }
+    .navbar a { display: block; color: #ccc; padding: 12px 10px; text-decoration: none; margin-bottom: 10px; border-radius: 8px; }
+    .navbar a.active, .navbar a:hover { background: #00aeff; color: #fff; }
+    .navbar a i { margin-right: 8px; }
+    .hamburger { display: none; position: fixed; top: 20px; right: 20px; width: 30px; height: 22px; flex-direction: column; cursor: pointer; z-index: 200; }
+    .hamburger span { height: 4px; width: 100%; background: #00aeff; border-radius: 2px; }
+    .main-content { margin-right: 200px; }
+    @media (max-width: 800px) {
+      .sidebar { transform: translateX(100%); transition: transform 0.3s; }
+      .sidebar.open { transform: translateX(0); }
+      .hamburger { display: flex; }
+      .main-content { margin-right: 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hamburger for mobile -->
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">Hanif</div>
+    <nav class="navbar">
+      <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      <a href="skills.html"><i class="fas fa-lightbulb"></i> Skills</a>
+      <a href="contact.html" class="active"><i class="fas fa-envelope"></i> Contact</a>
+      <a href="about.html"><i class="fas fa-user"></i> About</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="container">
+      <h1>Contact Me</h1>
+      <form id="contactForm">
+        <label for="name">Name</label>
+        <input type="text" id="name" required placeholder="Enter your name">
+
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" required placeholder="Enter your phone number">
+
+        <label for="comment">Comment</label>
+        <textarea id="comment" rows="4" required placeholder="Write your message..."></textarea>
+
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+  <!-- Your Firebase Config -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCayGcfnpCAGNDph3YTyEA9_KDdD2C5Fg0",
+      authDomain: "my-tiktok-cbd6f.firebaseapp.com",
+      databaseURL: "https://my-tiktok-cbd6f-default-rtdb.firebaseio.com",
+      projectId: "my-tiktok-cbd6f",
+      storageBucket: "my-tiktok-cbd6f.firebasestorage.app",
+      messagingSenderId: "964441294320",
+      appId: "1:964441294320:web:4c8da74a0cee8ed2644935",
+      measurementId: "G-RYBWW6XB10"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    document.getElementById("contactForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const comment = document.getElementById("comment").value.trim();
+
+      const newMessageRef = db.ref("contacts").push();
+      newMessageRef.set({
+        name: name,
+        phone: phone,
+        comment: comment,
+        timestamp: new Date().toISOString()
+      });
+
+      alert("✅ Message sent successfully!");
+      document.getElementById("contactForm").reset();
+    });
+  </script>
+
+  <!-- Sidebar Toggle & Page Slide Animation -->
+  <script>
+    // Sidebar hamburger
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+    hamburger.onclick = () => {
+      sidebar.classList.toggle('open');
+    };
+    document.addEventListener('click', function (e) {
+      if (
+        sidebar.classList.contains('open') &&
+        !sidebar.contains(e.target) &&
+        !hamburger.contains(e.target) &&
+        window.innerWidth <= 800
+      ) {
+        sidebar.classList.remove('open');
+      }
+    });
+
+    // Page slide-in on load
+    window.addEventListener('DOMContentLoaded', function() {
+      document.body.classList.add('page-loaded');
+    });
+
+    // Slide-out on internal link click
+    document.querySelectorAll('a[href]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const href = link.getAttribute('href');
+        if (
+          href &&
+          !href.startsWith('http') &&
+          !href.startsWith('#') &&
+          !link.hasAttribute('target')
+        ) {
+          e.preventDefault();
+          document.body.classList.remove('page-loaded');
+          document.body.classList.add('page-unloading');
+          setTimeout(() => {
+            window.location = href;
+          }, 500); // match transition duration
+        }
+      });
+    });
+  </script>
+</body>
+</html>

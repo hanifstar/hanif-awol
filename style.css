@@ -1,0 +1,119 @@
+body{
+    background-image: url('https://plus.unsplash.com/premium_photo-1686071978237-045211ad85ec?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fHdlYnNpdGUlMjBiYWNrZ3JvdW5kJTIwZGFya3xlbnwwfHwwfHx8MA%3D%3D');
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.imgpho{
+    width: 600px;      /* Makes the image big */
+   position: absolute;
+   bottom: 3px;
+   left: 650px;
+}
+.imglogo{
+    width: 120px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+h2{
+    color: red;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 50px;
+    position: absolute;
+    top: 30%;
+    left: 18%;
+}
+.text{
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 30px;
+    position: absolute;
+    top: 47%;
+    left: 3%;
+}
+.name{
+    color: rgb(255, 255, 255);
+    font-size: 30px;
+   font-family: 'Raleway', sans-serif;
+   font-weight: 700;
+   text-shadow:
+        0 0 10px #ff0000,
+        0 0 20px #ff0000b7,
+        0 0 40px #ff1818,
+        0 0 80px #ff1313;
+
+}
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
+
+.logo {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  
+  font-family: 'Rubik Mono One', sans-serif;
+  font-size: 20px;
+  text-transform: uppercase;
+  color: white;
+
+  background: linear-gradient(135deg, #00aeff, #10008b);
+  padding: 10px 20px;
+  border-radius: 10px;
+  box-shadow: 4px 4px 20px rgba(0, 213, 255, 0.4);
+}
+
+.social-icons {
+    position: absolute;
+    bottom: 60px;
+    left: 16%;
+    transform: none;
+    display: flex;
+    gap: 25px;
+    z-index: 10;
+}
+
+.icon {
+    width: 60px;
+    height: 60px;
+    background: #ffffff;         /* Dark background */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #000000;              /* White icon by default */
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    transition: 
+        transform 0.5s cubic-bezier(.68,-0.55,.27,1.55),
+        box-shadow 0.5s,
+        color 0.3s,
+        background 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+    will-change: transform;
+}
+
+.icon:hover {
+    transform: translateY(-30px) scale(1.1);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.22);
+}
+
+/* Brand color on hover */
+.icon.tiktok:hover { background: #000000; color: #ffffff; }
+.icon.youtube:hover { background: #ff0000; color: #fff; }
+.icon.instagram:hover { background: #e1306c; color: #fff; }
+.icon.facebook:hover { background: #1877f3; color: #fff; }
+.img3{
+width: 400px;
+position: absolute;
+top: 8%;
+left: 55%;
+}

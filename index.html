@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Page slide-from-top animation */
+        body {
+            /* Slide in from top */
+            transform: translateY(-100vh);
+            opacity: 0;
+            transition:
+                transform 0.6s cubic-bezier(.4,0,.2,1),
+                opacity 0.6s cubic-bezier(.4,0,.2,1);
+        }
+        body.page-loaded {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        body.page-unloading {
+            transform: translateY(100vh);
+            opacity: 0;
+        }
+        /* Desktop sidebar on the right */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 180px;
+            height: 100vh;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 32px;
+            z-index: 2000;
+            transition: right 0.4s cubic-bezier(.68,-0.55,.27,1.55);
+            box-shadow: -4px 0 24px rgba(0,0,0,0.18);
+        }
+        .sidebar .logo {
+            margin-bottom: 40px;
+            font-family: 'Rubik Mono One', sans-serif;
+            font-size: 22px;
+            text-transform: uppercase;
+            color: white;
+            background: linear-gradient(135deg, #00aeff, #10008b);
+            padding: 8px 18px;
+            border-radius: 10px;
+            box-shadow: 4px 4px 20px rgba(0, 213, 255, 0.4);
+        }
+        .sidebar .navbar {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+        .sidebar .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: color 0.2s, background 0.2s;
+            padding: 12px 24px;
+            border-radius: 6px;
+            width: 100%;
+            display: block;
+            text-align: left;
+        }
+        .sidebar .navbar a.active,
+        .sidebar .navbar a:hover {
+            background: #00aeff;
+            color: #fff;
+        }
+        .main-content {
+            margin-right: 200px;
+            padding: 32px 0 0 0;
+            transition: margin-right 0.4s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        /* Hamburger hidden on desktop */
+        .hamburger { display: none; }
+        /* Mobile sidebar and hamburger */
+        @media (max-width: 800px) {
+            .sidebar {
+                width: 70vw;
+                max-width: 260px;
+                right: -70vw;
+                box-shadow: -8px 0 32px rgba(0,0,0,0.22);
+            }
+            .sidebar.open { right: 0; }
+            .main-content { margin-right: 0 !important; }
+            .hamburger {
+                display: flex;
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 2100;
+                flex-direction: column;
+                justify-content: center;
+                cursor: pointer;
+                width: 36px;
+                height: 36px;
+            }
+            .hamburger span {
+                height: 4px;
+                width: 28px;
+                background: #fff;
+                margin: 4px 0;
+                border-radius: 2px;
+                transition: 0.3s;
+            }
+        }
+        /* Hide desktop navbar */
+        .desktop-navbar { display: none !important; }
+        body { padding-top: 0; }
+    </style>
+</head>
+<body>
+    <!-- Hamburger for mobile -->
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <!-- Sidebar for both desktop (right) and mobile (slide in from right) -->
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">Hanif</div>
+        <nav class="navbar">
+            <a href="index.html" class="active"><i class="fas fa-home"></i> Home</a>
+            <a href="skills.html"><i class="fas fa-lightbulb"></i> Skills</a>
+            <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+            <a href="about.html"><i class="fas fa-user"></i> About</a>
+        </nav>
+    </aside>
+    <div class="main-content">
+        <div class="container">
+            <h2 id="typing-h2" ></h2>
+            <p class="text">
+                Hello my name is <span class="name" id="typing-name"></span> <br>
+                I am a <span class="profession">Forex Trader</span> <span class="profession">Video Editor</span> and <span class="profession">Programmer</span>.
+            </p>
+        </div>
+        <div class="social-icons">
+            <a href="https://tiktok.com" target="_blank" class="icon tiktok"><i class="fab fa-tiktok"></i></a>
+            <a href="https://youtube.com" target="_blank" class="icon youtube"><i class="fab fa-youtube"></i></a>
+            <a href="https://instagram.com" target="_blank" class="icon instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://facebook.com" target="_blank" class="icon facebook"><i class="fab fa-facebook-f"></i></a>
+        </div>
+    </div>
+    <img src="Picsart_25-06-01_20-30-37-710.png" class="img3" alt="">
+    <script>
+    // Hamburger menu toggle for sidebar
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+    hamburger.onclick = function() {
+        sidebar.classList.toggle('open');
+    };
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function(e) {
+        if (
+            sidebar.classList.contains('open') &&
+            !sidebar.contains(e.target) &&
+            !hamburger.contains(e.target) &&
+            window.innerWidth <= 800
+        ) {
+            sidebar.classList.remove('open');
+        }
+    });
+
+    // Typing effect
+    const h2Texts = ["Forex Trader", "Video Editor", "Programmer"];
+    let h2Count = 0;
+    let h2Index = 0;
+    let h2Current = '';
+    let h2Letter = '';
+
+    (function typeH2() {
+        if (h2Count === h2Texts.length) {
+            h2Count = 0;
+        }
+        h2Current = h2Texts[h2Count];
+        h2Letter = h2Current.slice(0, ++h2Index);
+
+        document.getElementById('typing-h2').textContent = h2Letter;
+        if (h2Letter.length === h2Current.length) {
+            h2Count++;
+            h2Index = 0;
+            setTimeout(typeH2, 1200); // Pause before next word
+        } else {
+            setTimeout(typeH2, 100); // Typing speed
+        }
+    })();
+    const nameText = "HANIF AWOL";
+    let nameIndex = 0;
+
+    function typeName() {
+        document.getElementById('typing-name').textContent = nameText.slice(0, ++nameIndex);
+        if (nameIndex < nameText.length) {
+            setTimeout(typeName, 250); // Typing speed
+        }
+    }
+    document.getElementById('typing-name').textContent = ""; // Clear initial text
+    typeName();
+
+    // Page slide-from-top animation
+    window.addEventListener('DOMContentLoaded', function() {
+        document.body.classList.add('page-loaded');
+    });
+    document.querySelectorAll('a[href]').forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = link.getAttribute('href');
+            if (
+                href &&
+                !href.startsWith('http') &&
+                !href.startsWith('#') &&
+                !link.hasAttribute('target')
+            ) {
+                e.preventDefault();
+                document.body.classList.remove('page-loaded');
+                document.body.classList.add('page-unloading');
+                setTimeout(() => {
+                    window.location = href;
+                }, 600); // match transition duration
+            }
+        });
+    });
+    </script>
+</body>
+</html>
